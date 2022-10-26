@@ -2,10 +2,26 @@
 
 use App\Facades\Postcard;
 use App\Services\PostcardSendingService;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('macros/str/{number}', function (int $number) {
+    return [
+        'partNumber' => Str::partNumber($number),
+        'prefix' => Str::prefix($number, 'ABCD-'),
+    ];
+});
+
+Route::get('macros/response', function () {
+    $message = "A huge error occured BOOM !!!";
+    $code = 123;
+    
+    return Response::errorJson($message, $code);
 });
 
 Route::get('/nofacades/postcards', function () {
