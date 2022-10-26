@@ -1,6 +1,7 @@
 <?php
 
 use App\Facades\Postcard;
+use App\Http\Controllers\PostController;
 use App\Services\PostcardSendingService;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,8 @@ use Illuminate\Support\Str;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('posts', [PostController::class, 'index']);
 
 Route::get('macros/str/{number}', function (int $number) {
     return [
