@@ -1,6 +1,7 @@
 <?php
 
 use App\Facades\Postcard;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PostController;
 use App\Services\PostcardSendingService;
 use Illuminate\Support\Facades\Response;
@@ -10,6 +11,9 @@ use Illuminate\Support\Str;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('customers', [CustomerController::class, 'index']);
+Route::get('customers/{customer}', [CustomerController::class, 'show']);
 
 Route::get('posts', [PostController::class, 'index']);
 
