@@ -12,7 +12,7 @@ services:
     ports:
       - "80:80"
     environment:
-      - VIRTUAL_HOST=assessment.local
+      - VIRTUAL_HOST=laravel_advanced.loc.al
     depends_on:
       - mysql
     dns:

@@ -1,5 +1,6 @@
 FROM php:8.1.1-apache
 WORKDIR /var/www/html
+RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
 
 RUN apt-get update -y && apt-get install -y sendmail libpng-dev \
         libfreetype6-dev \
@@ -27,7 +28,7 @@ RUN echo "memory_limit = 2024M" >> /usr/local/etc/php/conf.d/uploads.ini
 RUN echo "max_execution_time = 30000" >> /usr/local/etc/php/conf.d/uploads.ini
 RUN echo "max_input_time = 30000" >> /usr/local/etc/php/conf.d/uploads.ini
 RUN echo "max_file_uploads = 1000" >> /usr/local/etc/php/conf.d/uploads.ini
-RUN chown -R www-data:www-data /app && a2enmod rewrite
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
