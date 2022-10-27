@@ -4,8 +4,10 @@ use App\Facades\Postcard;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PostController;
 use App\Services\PostcardSendingService;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Str;
 
 Route::get('/', function () {
@@ -46,3 +48,73 @@ Route::get('/facades/postcards', function () {
     return response()->json(["message" => $postcard]);
 });
 
+
+Route::get('lazy', function () {
+    // Eager Loading Collection
+    // $collection = Collection::times(10000000)
+    // ->map(function ($number) {
+    //     return pow(2, $number);
+    // })->all();
+
+    
+    // Lazy Loading Collection
+    $collection = LazyCollection::times(10000000)
+    ->map(function ($number) {
+        return pow(2, $number);
+    })->all();
+
+    return 'DONE !!!';
+});
+
+Route::get('generator', function () {
+    // OLD
+    // function happyFunction($string) {
+    //     return $string;
+    // }
+
+    // OLD Implementation
+    // function happyFunction() {
+    //     dump(1);
+    //     yield "One";
+    //     dump(2);
+        
+    //     dump(3);
+    //     yield "Two";
+    //     dump(4);
+        
+    //     dump(5);
+    //     yield "Three";
+    //     dump(6);
+    // }
+
+    // New Implementation
+    function happyFunction($strings) {
+        foreach ($strings as $string) {
+            dump('start');
+            yield $string;
+            dump('end');
+        }
+    }
+
+
+    // See the returning object and it works only with yield
+    // return get_class(happyFunction());
+    // return get_class_methods(happyFunction());
+    // $return = happyFunction(['One', 'Two', 'Three']);
+    
+    // OLD Implementation
+    // dump($return->current());
+    // $return->next();
+    // dump($return->current());
+    // $return->next();
+    // dump($return->current());
+    // $return->next();
+    // dump($return->current());
+    
+    // New Implementation
+    foreach(happyFunction(['One', 'Two', 'Three']) as $result) {
+        dump($result);
+    }
+
+    // return happyFunction("Super Happy");
+});
