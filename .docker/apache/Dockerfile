@@ -19,8 +19,9 @@ RUN apt-get install -y zip libzip-dev \
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN docker-php-ext-enable mysqli pdo pdo_mysql
 RUN apt-get update && apt-get install -y curl zip unzip
-RUN mkdir /app
+
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
+
 RUN touch /usr/local/etc/php/conf.d/uploads.ini \
     && echo "upload_max_filesize = 2024M" >> /usr/local/etc/php/conf.d/uploads.ini
 RUN echo "post_max_size = 2024M" >> /usr/local/etc/php/conf.d/uploads.ini
