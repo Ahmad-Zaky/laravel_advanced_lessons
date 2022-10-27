@@ -72,49 +72,26 @@ Route::get('generator', function () {
     //     return $string;
     // }
 
-    // OLD Implementation
-    // function happyFunction() {
-    //     dump(1);
-    //     yield "One";
-    //     dump(2);
-        
-    //     dump(3);
-    //     yield "Two";
-    //     dump(4);
-        
-    //     dump(5);
-    //     yield "Three";
-    //     dump(6);
-    // }
 
-    // New Implementation
-    function happyFunction($strings) {
-        foreach ($strings as $string) {
-            dump('start');
-            yield $string;
-            dump('end');
+    function notHappyFunction($number) {
+        $return = [];
+
+        for ($i=0; $i<$number; $i++) {
+            $return[] = $i;
+        }
+
+        return $return;
+    }
+
+    function happyFunction($number) {
+        for ($i=0; $i<$number; $i++) {
+            yield $i;
         }
     }
 
-
-    // See the returning object and it works only with yield
-    // return get_class(happyFunction());
-    // return get_class_methods(happyFunction());
-    // $return = happyFunction(['One', 'Two', 'Three']);
-    
-    // OLD Implementation
-    // dump($return->current());
-    // $return->next();
-    // dump($return->current());
-    // $return->next();
-    // dump($return->current());
-    // $return->next();
-    // dump($return->current());
-    
-    // New Implementation
-    foreach(happyFunction(['One', 'Two', 'Three']) as $result) {
-        dump($result);
+    foreach(happyFunction(10000000) as $number) {
+        if ($number % 100000 === 0) {
+            dump($number);
+        }
     }
-
-    // return happyFunction("Super Happy");
 });
