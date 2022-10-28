@@ -18,6 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/contests', [ContestEntryController::class, 'index'])->name('contests.index'); 
+Route::post('/contests', [ContestEntryController::class, 'store'])->name('contests.store'); 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
