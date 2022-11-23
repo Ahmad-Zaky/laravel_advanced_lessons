@@ -16,7 +16,6 @@ services:
       - VIRTUAL_HOST=laravel_advanced.loc.al
     depends_on:
       - mysql
-      - redis
     dns:
       - 8.8.8.8
       - 4.4.4.4
@@ -56,6 +55,19 @@ services:
       MYSQL_ROOT_PASSWORD: root
       PMA_HOST: mysql
       USER: root
+    networks:
+      - app-network
+  supervisor:
+    container_name: supervisor
+    build:
+      context: .
+      dockerfile: .docker/supervisor/Dockerfile
+    volumes:
+      - .:/var/www/html
+    mem_limit: 1024m
+    mem_reservation: 512M
+    ports:
+      - 9001:9001
     networks:
       - app-network
   redis:
